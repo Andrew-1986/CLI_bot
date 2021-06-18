@@ -47,6 +47,13 @@ class Application(object):
         else:
             print("Contact already present.")
     
+    def search(self):
+        name = input("Enter the name: ")
+        if name in self.persons:
+            print(self.persons[name])
+        else:
+            print("Contact not found.")
+    
     def update(self):
         name = input("Enter the name: ")
         if name in self.persons:
