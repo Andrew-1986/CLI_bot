@@ -39,7 +39,14 @@ class Application(object):
         else:
             with open(self.database, 'rb') as person_list:
                 self.persons = pickle.load(person_list)
-
+    
+    def add(self):
+        name, address, phone = self.getdetails()
+        if name not in self.persons:
+            self.persons[name] = Person(name, address, phone)
+        else:
+            print("Contact already present.")
+    
     def delete(self):
         name = input("Enter the name to delete: ")
         if name in self.persons:
