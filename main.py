@@ -47,6 +47,16 @@ class Application(object):
         else:
             print("Contact already present.")
     
+    def update(self):
+        name = input("Enter the name: ")
+        if name in self.persons:
+            print("Found. Enter new details.")
+            name, address, phone = self.getdetails()
+            self.persons[name].__init__(name, address, phone)
+            print("Successfully updated.")
+        else:
+            print("Contact not found.")
+    
     def delete(self):
         name = input("Enter the name to delete: ")
         if name in self.persons:
