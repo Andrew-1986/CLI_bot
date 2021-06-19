@@ -76,7 +76,9 @@ class Application(object):
         name = input("Name: ")
         address = input("Address: ")
         phone = input("Phone:")
-        return name, address, phone
+        mail = input("Mail: ")
+        birthday = input("Birthday: ")
+        return name, address, phone, mail, birthday
 
     def birthday_list(self):
         days = int(input('enter the number: '))
