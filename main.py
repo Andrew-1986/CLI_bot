@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import pickle
 import re
 import os
@@ -39,31 +39,31 @@ class Application(object):
         else:
             with open(self.database, 'rb') as person_list:
                 self.persons = pickle.load(person_list)
-    
+
     def add(self):
-        name, address, phone = self.getdetails()
+        name, address, phone, mail, birthday = self.getdetails()
         if name not in self.persons:
-            self.persons[name] = Person(name, address, phone)
+            self.persons[name] = User(name, address, phone, mail, birthday)
         else:
             print("Contact already present.")
-    
+
     def search(self):
         name = input("Enter the name: ")
         if name in self.persons:
             print(self.persons[name])
         else:
             print("Contact not found.")
-    
+
     def update(self):
         name = input("Enter the name: ")
         if name in self.persons:
             print("Found. Enter new details.")
-            name, address, phone = self.getdetails()
-            self.persons[name].__init__(name, address, phone)
+            name, address, phone, mail, birthday = self.getdetails()
+            self.persons[name].__init__(name, address, phone, mail, birthday)
             print("Successfully updated.")
         else:
             print("Contact not found.")
-    
+
     def delete(self):
         name = input("Enter the name to delete: ")
         if name in self.persons:
@@ -71,3 +71,18 @@ class Application(object):
             print("Deleted the contact.")
         else:
             print("Contact not found in the app.")
+
+    def getdetails(self):
+        name = input("Name: ")
+        address = input("Address: ")
+        phone = input("Phone:")
+        return name, address, phone
+
+    def birthday_list(self):
+        days = int(input('enter the number: '))
+        tomorrow = datetime.now() + timedelta(days=days)
+        tomorrow_formatted = tomorrow.strftime('%d.%m.%Y')
+        for names in self.persons.keys():
+            for item in self.persons[names]:
+                if tomorrow_formatted in item:
+                    print(names)
