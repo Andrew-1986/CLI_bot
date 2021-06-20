@@ -106,7 +106,7 @@ class Application(object):
         birthday = input("Birthday: ")
         note = input("Note: ")
         
-        if re.findall('[a-zA-Z]+', name) and (re.findall('\d+', phone) and len(phone) == 10) and (re.search('\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b', mail)):
+        if re.findall('[a-zA-Z]+', name) and (re.findall('\d+', phone) and len(phone) == 10) and re.findall('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', mail)):
             return name, address, phone, mail, birthday
         else:
             print(validate_msg)
