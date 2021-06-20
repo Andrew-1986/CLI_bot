@@ -14,6 +14,12 @@ UI = '''
 8. Exit
 '''
 
+validate_msg = ''' 
+Wrong data, please use next:
+1. Only letters for name
+2. Only digits for phone(lenght must be equal 10)
+3. Letters, digits, other symbols and @ for mail 
+'''
 
 class User(object):
 
@@ -99,7 +105,12 @@ class Application(object):
         mail = input("Mail: ")
         birthday = input("Birthday: ")
         note = input("Note: ")
-        return name, address, phone, mail, birthday
+        
+        if re.findall('[a-zA-Z]+', name) and (re.findall('\d+', phone) and len(phone) == 10) and (re.search('\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b', mail)):
+            return name, address, phone, mail, birthday
+        else:
+            print(validate_msg)
+        
 
     def birthday_list(self):
         days = int(input('enter the number: '))
