@@ -10,7 +10,8 @@ UI = '''
 4. Update contact
 5. Delete contact
 6. Reset all
-7. Exit
+7. Show birthday list
+8. Exit
 '''
 
 
