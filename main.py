@@ -23,6 +23,16 @@ class User(object):
         self.mail = mail
         self.birthday = birthday
 
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        try:
+            item = self.birthday
+        except AttributeError:
+            raise StopIteration
+        return item
+
     def __str__(self):
         return "{} {:>15} {:>15} {:>24} {:>15}".format(self.name, self.address, self.phone, self.mail, self.birthday)
 
@@ -85,6 +95,5 @@ class Application(object):
         tomorrow = datetime.now() + timedelta(days=days)
         tomorrow_formatted = tomorrow.strftime('%d.%m.%Y')
         for names in self.persons.keys():
-            for item in self.persons[names]:
-                if tomorrow_formatted in item:
-                    print(names)
+            if tomorrow_formatted in self.persons[names]:
+                print(names)
