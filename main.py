@@ -57,7 +57,15 @@ class Application(object):
             self.persons[name] = User(name, address, phone, mail, birthday)
         else:
             print("Contact already present.")
-
+    
+    def viewall(self):
+        if self.persons:
+            print("{} {:>15} {:>15} {:>24} {:>15}".format('Name', 'Address', 'Phone', 'E-mail', 'Birthday'))
+            for person in self.persons.values():
+                print(person)
+        else:
+            print("No contacts in database.")
+    
     def search(self):
         name = input("Enter the name: ")
         if name in self.persons:
