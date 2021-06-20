@@ -17,12 +17,13 @@ UI = '''
 
 class User(object):
 
-    def __init__(self, name=None, address=None, phone=None, mail=None, birthday=None):
+    def __init__(self, name=None, address=None, phone=None, mail=None, birthday=None, note=None):
         self.name = name
         self.address = address
         self.phone = phone
         self.mail = mail
         self.birthday = birthday
+        self.note = note
 
     def __iter__(self):
         return self
@@ -35,7 +36,7 @@ class User(object):
         return item
 
     def __str__(self):
-        return "{} {:>15} {:>15} {:>24} {:>15}".format(self.name, self.address, self.phone, self.mail, self.birthday)
+        return "{} {:>15} {:>15} {:>24} {:>15} {:>15}".format(self.name, self.address, self.phone, self.mail, self.birthday, self.note)
 
 
 class Application(object):
@@ -52,15 +53,15 @@ class Application(object):
                 self.persons = pickle.load(person_list)
 
     def add(self):
-        name, address, phone, mail, birthday = self.getdetails()
+        name, address, phone, mail, birthday, note = self.getdetails()
         if name not in self.persons:
-            self.persons[name] = User(name, address, phone, mail, birthday)
+            self.persons[name] = User(name, address, phone, mail, birthday, note)
         else:
             print("Contact already present.")
     
     def viewall(self):
         if self.persons:
-            print("{} {:>15} {:>15} {:>24} {:>15}".format('Name', 'Address', 'Phone', 'E-mail', 'Birthday'))
+            print("{} {:>15} {:>15} {:>24} {:>15}".format('Name', 'Address', 'Phone', 'E-mail', 'Birthday', 'Note'))
             for person in self.persons.values():
                 print(person)
         else:
@@ -77,8 +78,8 @@ class Application(object):
         name = input("Enter the name: ")
         if name in self.persons:
             print("Found. Enter new details.")
-            name, address, phone, mail, birthday = self.getdetails()
-            self.persons[name].__init__(name, address, phone, mail, birthday)
+            name, address, phone, mail, birthday, note = self.getdetails()
+            self.persons[name].__init__(name, address, phone, mail, birthday, note)
             print("Successfully updated.")
         else:
             print("Contact not found.")
@@ -97,6 +98,7 @@ class Application(object):
         phone = input("Phone:")
         mail = input("Mail: ")
         birthday = input("Birthday: ")
+        note = input("Note: ")
         return name, address, phone, mail, birthday
 
     def birthday_list(self):
