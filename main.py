@@ -21,6 +21,8 @@ Wrong data, please use next:
 3. Letters, digits, other symbols and @ for mail 
 '''
 
+contact_head = "|{:<15}|{:<15}|{:<15}|{:<24}|{:<15}|{:<15}".format('Name', 'Address', 'Phone', 'E-mail', 'Birthday', 'Note')
+
 class User(object):
 
     def __init__(self, name=None, address=None, phone=None, mail=None, birthday=None, note=None):
@@ -42,7 +44,7 @@ class User(object):
         return item
 
     def __str__(self):
-        return "{} {:>15} {:>15} {:>24} {:>15} {:>15}".format(self.name, self.address, self.phone, self.mail, self.birthday, self.note)
+        return "|{:<15}|{:<15}|{:<15}|{:<24}|{:<15}|{:<15}".format(self.name, self.address, self.phone, self.mail, self.birthday, self.note)
 
 
 class Application(object):
@@ -62,12 +64,13 @@ class Application(object):
         name, address, phone, mail, birthday, note = self.getdetails()
         if name not in self.persons:
             self.persons[name] = User(name, address, phone, mail, birthday, note)
+            print("Contact was added")
         else:
             print("Contact already present.")
     
     def viewall(self):
         if self.persons:
-            print("{} {:>15} {:>15} {:>24} {:>15}".format('Name', 'Address', 'Phone', 'E-mail', 'Birthday', 'Note'))
+            print(contact_head)
             for person in self.persons.values():
                 print(person)
         else:
@@ -76,6 +79,7 @@ class Application(object):
     def search(self):
         name = input("Enter the name: ")
         if name in self.persons:
+            print(contact_head)
             print(self.persons[name])
         else:
             print("Contact not found.")
@@ -106,11 +110,10 @@ class Application(object):
         birthday = input("Birthday: ")
         note = input("Note: ")
         
-        if re.findall('[a-zA-Z]+', name) and (re.findall('\d+', phone) and len(phone) == 10) and re.findall('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', mail)):
-            return name, address, phone, mail, birthday
+        if re.findall('[a-zA-Z]+', name) and (re.findall('\d+', phone) and len(phone) == 10) and re.findall('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', mail):
+            return name, address, phone, mail, birthday, note
         else:
             print(validate_msg)
-        
 
     def birthday_list(self):
         days = int(input('enter the number: '))
@@ -119,3 +122,43 @@ class Application(object):
         for names in self.persons.keys():
             if tomorrow_formatted in self.persons[names]:
                 print(names)
+
+    def reset(self):
+        self.persons = {}
+
+    def __del__(self):
+        with open(self.database, 'wb') as db:
+            pickle.dump(self.persons, db)
+
+    def __str__(self):
+        return UI
+
+
+def main():
+    app = Application('contacts.data')
+    choice = ''
+
+    while choice != '8':
+        print(app)
+        choice = input('Choose: ')
+        if choice == '1':
+            app.add()
+        elif choice == '2':
+            app.viewall()
+        elif choice == '3':
+            app.search()
+        elif choice == '4':
+            app.update()
+        elif choice == '5':
+            app.delete()
+        elif choice == '6':
+            app.reset()
+        elif choice == '7':
+            app.birthday_list()
+        elif choice == '8':
+            print("Exiting.")
+        else:
+            print("Invalid choice.")
+
+if __name__ == '__main__':
+    main()
