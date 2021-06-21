@@ -90,13 +90,16 @@ class Application(object):
 
     def update(self):
         name = input("Enter the name: ")
-        if name in self.persons:
-            print("Found. Enter new details.")
-            name, address, phone, mail, birthday, note = self.getdetails()
-            self.persons[name].__init__(name, address, phone, mail, birthday, note)
-            print("Successfully updated.")
-        else:
-            print("Contact not found.")
+        try:
+            if name in self.persons:
+                print("Found. Enter new details.")
+                name, address, phone, mail, birthday, note = self.getdetails()
+                self.persons[name].__init__(name, address, phone, mail, birthday, note)
+                print("Successfully updated.")
+            else:
+                print("Contact not found.")
+          except:
+            print("You enter wrong data! Please try again!")
 
     def delete(self):
         name = input("Enter the name to delete: ")
