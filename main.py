@@ -18,7 +18,8 @@ validate_msg = '''
 Wrong data, please use next:
 1. Only letters for name
 2. Only digits for phone(lenght must be equal 10)
-3. Letters, digits, other symbols and @ for mail 
+3. Letters, digits, other symbols and @ for mail
+4. For birthday use next pattern: dd.mm.yyyy
 '''
 
 contact_head = "|{:<15}|{:<15}|{:<15}|{:<24}|{:<15}|{:<15}".format('Name', 'Address', 'Phone', 'E-mail', 'Birthday', 'Note')
@@ -61,12 +62,15 @@ class Application(object):
                 self.persons = pickle.load(person_list)
 
     def add(self):
-        name, address, phone, mail, birthday, note = self.getdetails()
-        if name not in self.persons:
-            self.persons[name] = User(name, address, phone, mail, birthday, note)
-            print("Contact was added")
-        else:
-            print("Contact already present.")
+        try:
+            name, address, phone, mail, birthday, note = self.getdetails()
+            if name not in self.persons:
+                self.persons[name] = User(name, address, phone, mail, birthday, note)
+                print("Contact was added")
+            else:
+                print("Contact already present.")
+         except:
+            print("Contact not added! Please try again!")
     
     def viewall(self):
         if self.persons:
@@ -110,7 +114,7 @@ class Application(object):
         birthday = input("Birthday: ")
         note = input("Note: ")
         
-        if re.findall('[a-zA-Z]+', name) and (re.findall('\d+', phone) and len(phone) == 10) and re.findall('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', mail):
+        if re.findall('[a-zA-Z]+', name) and (re.findall('\d+', phone) and len(phone) == 10) and re.findall('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', mail) and re.findall('[0-9]{2}.[0-9]{2}.[0-9]{4}', birthday):
             return name, address, phone, mail, birthday, note
         else:
             print(validate_msg)
