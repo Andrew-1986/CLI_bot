@@ -126,9 +126,13 @@ class Application(object):
         days = int(input('enter the number: '))
         tomorrow = datetime.now() + timedelta(days=days)
         tomorrow_formatted = tomorrow.strftime('%d.%m.%Y')
-        for names in self.persons.keys():
-            if tomorrow_formatted in self.persons[names]:
-                print(names)
+        
+        try:
+            for names in self.persons.keys():
+                if tomorrow_formatted in self.persons[names]:
+                    print(names)
+        except KeyboardInterrupt:
+            print("Manual exit!")
 
     def reset(self):
         self.persons = {}
