@@ -69,7 +69,7 @@ class Application(object):
                 print("Contact was added")
             else:
                 print("Contact already present.")
-         except:
+        except:
             print("Contact not added! Please try again!")
     
     def viewall(self):
@@ -98,7 +98,7 @@ class Application(object):
                 print("Successfully updated.")
             else:
                 print("Contact not found.")
-          except:
+        except:
             print("You enter wrong data! Please try again!")
 
     def delete(self):
