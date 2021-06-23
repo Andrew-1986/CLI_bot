@@ -2,7 +2,7 @@
 Separate repository for goit first project
 
 Install cli_bot from terminal:
-Use command "pip install https://github.com/Andrew-1986/CLI_bot/releases/download/v1.2/CLI_bot-main.zip"
+Use command "pip install https://github.com/Andrew-1986/CLI_bot/releases/download/v1.3/CLI_bot-main.zip"
 
 For launch programm write command cli_bot after setup package
 
